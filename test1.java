@@ -29,16 +29,14 @@ public class test1 {
         return new InputStreamReader(new BufferedInputStream(input_stream), encoding);
     }
 
-    static String readResponse(InputStream connectionInputStream, String encoding) throws IOException {
+    static String read_response(InputStream connectionInputStream, String encoding) throws IOException {
         try (Reader reader = chain2reader(connectionInputStream, encoding)) {
-            StringBuffer sBuffer = new StringBuffer();
-            sBuffer.append(" String Buffer");
-
+            StringBuffer buffer = new StringBuffer();
             int character;
             while ((character = reader.read()) != -1) {
-                sBuffer.append((char) character);
+                buffer.append((char) character);
             }
-            return sBuffer.toString();
+            return buffer.toString();
         }
     }
 
@@ -49,7 +47,7 @@ public class test1 {
         connection.setRequestProperty("Accept-Language", accept_language);
     }
 
-    static String GET_request(String url_str) throws IOException {
+    static String get_request(String url_str) throws IOException {
         URL url = new URL(url_str);
         // openConnection do not really connect to the opponent.
         // It just creates a connection object.
@@ -59,9 +57,8 @@ public class test1 {
         setProperties(http_connection);
 
 
-
         // getInputStream() will auto implicitly connect to opponent.
-        String response = readResponse(http_connection.getInputStream(), "utf-8");
+        String response = read_response(http_connection.getInputStream(), "utf-8");
         print("Response Header:");
         print(http_connection.getHeaderFields().entrySet());
         return response;
@@ -83,10 +80,10 @@ public class test1 {
         //TODO http_connection.setDoOutput(true);
 
 
-        GET_request(url_str2);
+        get_request(url_str2);
         print(manager.getCookieStore().getCookies());
 
-        GET_request(url_str3);
+        get_request(url_str3);
         print(manager.getCookieStore().getCookies());
 
         //URLconnection did not implement disconnect but HttpURLConnection did.
