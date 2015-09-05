@@ -3,6 +3,24 @@ Proxies
 //Reading the Header
 
 ============================
+/*
+There are no methods that directly read or change the value of connected of URLconnection.
+However, any method that causes the URLConnection to connect should set this variable to true,
+including connect(), getInputStream(), and getOutputStream().
+
+There are no disconnect methods in java.net.URLConnection.
+
+In HttpURLConnection keep-alive, servers will time out and close the connection in as little as 5 seconds of inactivity.
+However, it’s still preferred for the client to close the connection as soon as it knows it’s done.
+The HttpURLConnection class transparently supports HTTP Keep-Alive unless you explicitly turn it off.
+That is, it will reuse sockets if you connect to the same server again before the server has closed the connection.
+Once you know you’re done talking to a particular host, the disconnect() method enables a client to break
+the connection: public abstract void disconnect()
+*/
+
+用http_connection.getHeaderFields()得到的header會有漏; cookieManger也會有漏cookie的情況;
+我看之後可能自己開socket寫比較穩.
+
 HttpURLConnection:
 
 try {
@@ -48,7 +66,7 @@ out.flush();
 //Because we use try with statement, we don't have close out manually
 //out.close();
 //I don't know this disconnection proper or not
-//http_connection.disconnect
+//http_connection.disconnect()
 }
 } catch (MalformedURLException ex) {
   System.err.println(args[0] + " is not a parseable URL");
@@ -97,6 +115,8 @@ uc.setRequestProperty("Cookie",
 "username=elharo; password=ACD0X9F23JJJn6G; session=100678945");
 //public Map<String,List<String>> getRequestProperties()
 
+Get Header:
+http_connection.getHeaderFields().entrySet()
 
 Cookie Manager:
 
@@ -178,5 +198,17 @@ String output = URLDecoder.decode(input, "UTF-8");
 System.out.println(output);
 
 
+JavaScript:
+onclick  click
+onsubmit submit
+all javascript events
 
+disable javascript of browser to login!!
 
+onfocus 進入欄位
+onblur  離開欄位
+
+script
+
+把所有的網址拔掉;
+再叫瀏覽器取出password;
